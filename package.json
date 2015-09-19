@@ -34,7 +34,9 @@
   },
   "dependencies": {
     "dotenv": "^1.2.0",
+    "history": "^1.9.1",
     "react": "^0.13.0",
+    "react-bootstrap": "^0.25.2",
     "react-router": "^1.0.0-rc1"
   }
 }

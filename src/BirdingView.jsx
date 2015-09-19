@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
+import forest from '../img/forest.jpg';
 
 export default class BirdingView extends Component {
   render() {
     return (
-      <h1>Hello from BirdingView</h1>
+      <img src={forest} />
     );
   }
 }

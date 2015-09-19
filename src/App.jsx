@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import BirdingView from './BirdingView';
+import BirdingView from './BirdingView.jsx';
 
 export default class App extends Component {
   render() {
     return (
-      <h1>Hello, world.</h1>
+      <BirdingView />
     );
   }
 }

@@ -16,14 +16,23 @@ module.exports = {
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({
-      'process.env': process.env
+      'process.env': JSON.stringify(process.env),
     }),
   ],
+  resolve: {
+    extensions: ['.js', '.jsx', '', '.jpg', '.png'],
+  },
   module: {
-    loaders: [{
-      test: /\.js$/,
-      loaders: ['react-hot', 'babel'],
-      include: path.join(__dirname, 'src')
-    }]
+    loaders: [
+      {
+        test: /\.jsx?$/,
+        loaders: ['react-hot', 'babel'],
+        include: path.join(__dirname, 'src')
+      },
+      {
+        test: /\.(png|jpe?g)$/,
+        loader: 'url-loader?limit=8192'
+      } // inline base64 URLs for <=8k images, direct URLs for the rest
+    ]
   }
 };

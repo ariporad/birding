@@ -1,21 +1,35 @@
 /* (c) 2015 Ari Porad (@ariporad) <ari@ariporad.com>. MIT Licensed */
-import forest from '../img/forest.jpg';
-
 const actionType = type => `birding/BirdingView/${`${type}`.toUpperCase()}`;
-const SET_IMG   = actionType('SET_IMG');
+const SHOW_BIRD       = actionType('SHOW_BIRD');
+const HIDE_BIRD       = actionType('HIDE_BIRD');
 
-export default function reducer(state = { img: forest }, action) {
+import forest from '../img/forest.jpg';
+const birds = require.context('../img', false, /^\.\/bird[0-9]+\.(png|jpe?g)$/);
+
+function randomItem(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+function randomBird() {
+  const birdname = randomItem(birds.keys());
+  return { img: birds(birdname), name: birdname.match(/\.\/(.+)\.(?:png|jpe?g)/i)[1] };
+}
+
+export default function reducer(state = { img: forest, bird: null }, action) {
   switch (action.type) {
-    case SET_IMG:
-      state = { ...state };
-      state.img = action.payload;
-      return state;
+    case SHOW_BIRD:
+      const bird = randomBird();
+      return { ...state, img: bird.img, bird: bird.name };
+    case HIDE_BIRD:
+      return { ...state, img: forest, bird: null };
     default: return state;
   }
 }
 
-export function setImage(img) {
-  return { type: SET_IMG, payload: img };
+export function showBird() {
+  return { type: SHOW_BIRD };
 }
 
-
+export function hideBird() {
+  return { type: HIDE_BIRD };
+}

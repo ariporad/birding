@@ -1,29 +1,51 @@
 import React, { Component } from 'react';
+import Radium from 'radium';
 import { connect } from 'react-redux';
 
-import { setImage } from '../ducks/BirdingView';
+import { showBird, hideBird } from '../ducks/BirdingView';
 
-const birds = require.context('../img', false, /^\.\/bird[0-9]+\.(png|jpe?g)$/);
+import binoculars from '../img/binocularsWithLeafs.png';
 
-function randomItem(arr) {
-  return arr[Math.floor(Math.random()*arr.length)];
-}
+const styles = {
+  binoculars: {
+    hide: {
+      display: 'none',
+    },
+    show: {
+      maxWidth: '1500px',
+      maxHeight: '750px',
+    }
+  },
+  bird: {
+    position: 'relative',
+    top: '-550px',
+    left: '100px',
+  },
+  forest: {
 
-function randomBird() {
-  return birds(randomItem(birds.keys()));
-}
+  },
+  container: {
+    width: '1500px',
+    height: '750px',
+  },
+};
 
 @connect(
-  state => state.BirdingView
+    state => state.BirdingView
 )
+@Radium
 export default class BirdingView extends Component {
   imageClicked() {
-    this.props.dispatch(setImage(randomBird()));
+    this.props.dispatch(showBird());
+    setTimeout(() => this.props.dispatch(hideBird()), 1000);
   }
 
   render() {
     return (
-      <img src={this.props.img} onClick={::this.imageClicked} />
+      <div style={styles.container}>
+        <img src={binoculars} style={styles.binoculars[this.props.bird ? 'show' : 'hide']} />
+        <img src={this.props.img} onClick={::this.imageClicked} style={styles[this.props.bird ? 'bird': 'forest']}/>
+      </div>
     );
   }
 }

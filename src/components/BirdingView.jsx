@@ -41,8 +41,8 @@ const styles = {
 export default class BirdingView extends Component {
   backToForest() {
     if (this._backToForestTimer) clearTimeout(this._backToForestTimer);
-    this.props.hideBird();
-    this.props.hideBinoculars();
+    this.props.bird && this.props.hideBird();
+    this.props.binoculars && this.props.hideBinoculars();
   }
 
   imageClicked() {

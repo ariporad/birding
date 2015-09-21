@@ -5,7 +5,6 @@ const HIDE_BIRD       = actionType('HIDE_BIRD');
 const SHOW_BINOCULARS = actionType('SHOW_BINOCULARS');
 const HIDE_BINOCULARS = actionType('HIDE_BINOCULARS');
 
-import forest from '../img/forest.jpg';
 const birds = require.context('../img', false, /^\.\/bird[0-9]+\.(png|jpe?g)$/);
 
 function randomItem(arr) {
@@ -17,13 +16,13 @@ function randomBird() {
   return { img: birds(birdname), name: birdname.match(/\.\/(.+)\.(?:png|jpe?g)/i)[1] };
 }
 
-export default function reducer(state = { img: forest, bird: null, binoculars: false }, action) {
+export default function reducer(state = { bird: null, birdname: null, binoculars: false }, action) {
   switch (action.type) {
     case SHOW_BIRD:
       const bird = randomBird();
-      return { ...state, img: bird.img, bird: bird.name };
+      return { ...state, bird: bird.img, birdname: bird.name };
     case HIDE_BIRD:
-      return { ...state, img: forest, bird: null };
+      return { ...state, bird: null, birdname: null };
     case SHOW_BINOCULARS:
       return { ...state, binoculars: true };
     case HIDE_BINOCULARS:

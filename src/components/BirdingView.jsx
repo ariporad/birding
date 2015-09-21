@@ -6,8 +6,9 @@ import { connect } from 'react-redux';
 import * as ActionCreators from '../ducks/BirdingView';
 
 import binoculars from '../img/binocularsWithLeafs.png';
+import forest from '../img/forest.jpg';
 
-const noop = () => {}
+const noop = () => {};
 
 const styles = {
   size: {
@@ -46,7 +47,7 @@ export default class BirdingView extends Component {
 
   imageClicked() {
     this.props.showBinoculars();
-    if (Math.floor((Math.random() * 100) + 1) <= __ENV__.BIRD_ODDS || 50) {
+    if (Math.floor((Math.random() * 100) + 1) <= (__ENV__.BIRD_ODDS || 50)) {
       // You found one!
       this.props.showBird();
     }
@@ -56,16 +57,17 @@ export default class BirdingView extends Component {
   render() {
     return (
       <div style={[styles.container, styles.size]} onClick={this.props.binoculars ? ::this.backToForest : noop}>
-        <img src={binoculars} style={[styles[this.props.binoculars ? 'binoculars' : 'hide'], styles.size]} />
         <img
-          src={this.props.img}
-          onClick={this.props.binoculars ? noop : ::this.imageClicked}
+          src={forest}
+          onClick={::this.imageClicked}
           style={[
-            styles[this.props.bird ? 'bird': 'forest'],
-            (this.props.binoculars && !this.props.bird) && styles.hide,
-            this.props.bird || styles.size
+            styles.forest,
+            styles.size,
+            this.props.binoculars && styles.hide,
            ]}
         />
+        <img src={binoculars} style={[styles[this.props.binoculars ? 'binoculars' : 'hide'], styles.size]} />
+        <img src={this.props.bird} style={[styles.bird, this.props.bird || styles.hide]} />
       </div>
     );
   }

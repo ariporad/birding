@@ -37,6 +37,7 @@
     "dotenv": "^1.2.0",
     "file-loader": "^0.8.4",
     "history": "^1.9.1",
+    "jquery": "^2.1.4",
     "radium": "^0.14.1",
     "react": "^0.13.0",
     "react-bootstrap": "^0.25.2",

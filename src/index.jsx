@@ -15,19 +15,19 @@ const store = compose(
   persistState(window.location.href.match(/[?&]debug=([^&]+)\b/))
 )(createStore)(combineReducers({ BirdingView }));
 
-class wrappedApp extends React.Component {
+class Wrapper extends React.Component {
   render() {
-    const debug = __DEV__ ? (
+    const debugPanel = (
       <DebugPanel top right bottom>
         <DevTools store={store} monitor={LogMonitor} />
       </DebugPanel>
-    ) : undefined;
+    );
     return (
       <div >
         <Provider store={store}>
           {() => <App />}
         </Provider>
-        {debug}
+        {__DEV__ ? debugPanel: undefined}
       </div>
     );
   }
@@ -35,6 +35,6 @@ class wrappedApp extends React.Component {
 
 React.render((
   <Router history={createBrowserHistory()}>
-    <Route path="/" component={wrappedApp} />
+    <Route path="/" component={Wrapper} />
   </Router>
 ), document.getElementById('root'));

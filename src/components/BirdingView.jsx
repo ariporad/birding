@@ -46,11 +46,11 @@ export default class BirdingView extends Component {
 
   imageClicked() {
     this.props.showBinoculars();
-    if (Math.floor((Math.random() * 100) + 1) <= __ENV__.BIRD_ODDS) {
+    if (Math.floor((Math.random() * 100) + 1) <= __ENV__.BIRD_ODDS || 50) {
       // You found one!
       this.props.showBird();
     }
-    this._backToForestTimer = setTimeout(() => this.backToForest(), 1000);
+    this._backToForestTimer = setTimeout(() => this.backToForest(), __ENV__.LOOK_TIME || 2000);
   }
 
   render() {

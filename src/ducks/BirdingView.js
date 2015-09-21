@@ -2,6 +2,8 @@
 const actionType = type => `birding/BirdingView/${`${type}`.toUpperCase()}`;
 const SHOW_BIRD       = actionType('SHOW_BIRD');
 const HIDE_BIRD       = actionType('HIDE_BIRD');
+const SHOW_BINOCULARS = actionType('SHOW_BINOCULARS');
+const HIDE_BINOCULARS = actionType('HIDE_BINOCULARS');
 
 import forest from '../img/forest.jpg';
 const birds = require.context('../img', false, /^\.\/bird[0-9]+\.(png|jpe?g)$/);
@@ -15,13 +17,17 @@ function randomBird() {
   return { img: birds(birdname), name: birdname.match(/\.\/(.+)\.(?:png|jpe?g)/i)[1] };
 }
 
-export default function reducer(state = { img: forest, bird: null }, action) {
+export default function reducer(state = { img: forest, bird: null, binoculars: false }, action) {
   switch (action.type) {
     case SHOW_BIRD:
       const bird = randomBird();
       return { ...state, img: bird.img, bird: bird.name };
     case HIDE_BIRD:
       return { ...state, img: forest, bird: null };
+    case SHOW_BINOCULARS:
+      return { ...state, binoculars: true };
+    case HIDE_BINOCULARS:
+      return { ...state, binoculars: false };
     default: return state;
   }
 }
@@ -32,4 +38,12 @@ export function showBird() {
 
 export function hideBird() {
   return { type: HIDE_BIRD };
+}
+
+export function showBinoculars() {
+  return { type: SHOW_BINOCULARS };
+}
+
+export function hideBinoculars() {
+  return { type: HIDE_BINOCULARS };
 }

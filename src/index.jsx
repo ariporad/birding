@@ -17,14 +17,17 @@ const store = compose(
 
 class wrappedApp extends React.Component {
   render() {
+    const debug = __DEV__ ? (
+      <DebugPanel top right bottom>
+        <DevTools store={store} monitor={LogMonitor} />
+      </DebugPanel>
+    ) : undefined;
     return (
       <div >
         <Provider store={store}>
           {() => <App />}
         </Provider>
-        <DebugPanel top right bottom>
-          <DevTools store={store} monitor={LogMonitor} />
-        </DebugPanel>
+        {debug}
       </div>
     );
   }

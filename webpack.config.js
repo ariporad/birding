@@ -16,7 +16,11 @@ module.exports = {
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({
-      'process.env': JSON.stringify(process.env),
+      '__ENV__': JSON.stringify({
+        BIRD_ODDS: 50,
+      }),
+      '__DEV__': process.env.NODE_ENV !== 'production',
+      'process.env': JSON.stringify(process.env), // In case someone else uses it
     }),
   ],
   resolve: {

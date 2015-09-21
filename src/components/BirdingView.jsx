@@ -57,17 +57,16 @@ export default class BirdingView extends Component {
   render() {
     return (
       <div style={[styles.container, styles.size]} onClick={this.props.binoculars ? ::this.backToForest : noop}>
-        <img
+        {this.props.binoculars || <img
           src={forest}
           onClick={::this.imageClicked}
           style={[
             styles.forest,
             styles.size,
-            this.props.binoculars && styles.hide,
            ]}
-        />
-        <img src={binoculars} style={[styles[this.props.binoculars ? 'binoculars' : 'hide'], styles.size]} />
-        <img src={this.props.bird} style={[styles.bird, this.props.bird || styles.hide]} />
+        />}
+        {this.props.binoculars && <img src={binoculars} style={[styles.binoculars, styles.size]} />}
+        {this.props.binoculars && this.props.bird && <img src={this.props.bird} style={[styles.bird]} />}
       </div>
     );
   }
